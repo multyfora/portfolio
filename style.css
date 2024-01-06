@@ -259,6 +259,7 @@ nav ul li a:hover:after{
     overflow-x: auto;
 
 }
+
 #media-container{
     padding-top: 80px;
     padding-bottom: 80px;
@@ -287,4 +288,21 @@ nav ul li a:hover:after{
 
 .snaps-inline > *{
     scroll-snap-align: start;
+}
+
+
+::-webkit-scrollbar{
+    height: var(--_spacer);
+
+}
+::-webkit-scrollbar-track{
+    margin-inline: var(--_spacer);
+    background: #262626;
+    border-radius: var(--radius-2);
+
+}
+::-webkit-scrollbar-thumb{
+    background: #C91393;
+    border: 0.15em solid #262626 ;
+    border-radius: var(--radius-2);
 }
