@@ -1,4 +1,7 @@
 
+@import "https://unpkg.com/open-props";
+@import "https://unpkg.com/open-props/normalize.min.css";
+
 @font-face {
     font-family: 'Righteous'; /*a name to be used later*/
     src: url('fonts/Righteous-Regular.ttf'); /*URL to font*/
@@ -10,11 +13,12 @@
     font-family: 'Poppings', sans-serif;
     box-sizing: border-box;
 }
-
+html{
+    scroll-behavior: smooth;
+}
 body{
     background-color: #080808;
     color: white;
-    /* scroll-behavior: smooth; */
 }
 #header{
     width: 100%;
@@ -201,6 +205,7 @@ nav ul li a:hover:after{
 }
 
 .services-list div{
+    user-select: none;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -235,4 +240,51 @@ nav ul li a:hover:after{
     background: #d15bae;
     transform: translateY(-10px);
     transition: background 0.5s, transform 0.5s;
+}
+
+/* --------------------------- Gallery --------------------------- */
+
+
+.media-scroller{
+    --_spacer: var(--size-3);
+    display: grid;
+    grid-template-rows: min-content;
+    gap: var(--_spacer);
+    grid-auto-flow: column;
+    grid-auto-columns: 40%;
+    margin-top: 80px;
+    
+    padding: 0 var(--_spacer) var(--_spacer);
+    overscroll-behavior-inline: contain;
+    overflow-x: auto;
+
+}
+#media-container{
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.media-element{
+    display: grid;
+    gap: var(--_spacer);
+    padding: var(--_spacer);
+    background: #262626;
+    border-radius: var(--radius-2);
+
+}
+
+.media-element > img{
+    inline-size: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.snaps-inline{
+
+    scroll-snap-type: inline mandatory;
+    scroll-padding-inline: var(--_spacer, 1rem);
+}
+
+.snaps-inline > *{
+    scroll-snap-align: start;
 }
