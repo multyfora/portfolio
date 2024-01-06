@@ -12,12 +12,14 @@
     padding: 0;
     font-family: 'Poppings', sans-serif;
     box-sizing: border-box;
+    
 }
 html{
     scroll-behavior: smooth;
 }
 body{
     background-color: #080808;
+    cursor: url('./images/cursor.svg'), auto;
     color: white;
 }
 #header{
@@ -27,6 +29,29 @@ body{
     background-size: cover;
     background-position: center;
     z-index: -1;
+}
+
+#to-top{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 4%;
+    right: 3%;
+    height: 100px;
+    width: 100px;
+    background-color: #C91393;
+    border-radius: 100vh;
+
+    scale: .8; opacity: 0;
+    animation: fade-in linear forwards;
+    animation-timeline: view();
+}
+#to-top i{
+    font-size: 30px;
+    text-decoration: none;
+    color: white;
 }
 
 .container{
@@ -262,7 +287,7 @@ nav ul li a:hover:after{
 
 #media-container{
     padding-top: 80px;
-    padding-bottom: 80px;
+    padding-bottom: 170px;
 }
 
 .media-element{
@@ -293,6 +318,7 @@ nav ul li a:hover:after{
 
 ::-webkit-scrollbar{
     height: var(--_spacer);
+    width: var(--_spacer);
 
 }
 ::-webkit-scrollbar-track{
@@ -305,4 +331,19 @@ nav ul li a:hover:after{
     background: #C91393;
     border: 0.15em solid #262626 ;
     border-radius: var(--radius-2);
+}
+
+@media (prefers-reduced-motion: no-preference){
+.fade-in{
+    scale: .8; opacity: 0;
+    animation: fade-in linear forwards;
+    animation-timeline: view();
+    animation-range: entry;
+}
+
+@keyframes fade-in {
+
+    to{scale: 1; opacity: 1;}
+    
+}
 }
