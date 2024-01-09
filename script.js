@@ -2,6 +2,7 @@ const tabLinks = document.getElementsByClassName("tab-links");
 const tabContents = document.getElementsByClassName("tab-contents");
 const typedTextSpan = document.querySelector(".typed-text");
 const cursorSpan = document.querySelector(".cursor");
+const canvas = document.querySelector("canvas");
 
 function openTab(tabName){
 
@@ -55,3 +56,50 @@ function erase() {
 document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
   if(textArray.length) setTimeout(type, newTextDelay + 250);
 });
+
+
+
+// scrolll things ---------------------------------
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const context = canvas.getContext("2d");
+  const frameCount = 120;
+
+  const currentFrame = (index) => `./BH-frames/${(index + 1).toString()}.png`;  
+
+  const images = [];
+
+  let frame = {frame: 0};
+
+  for(let i = 1; i<frameCount; i++){
+    const img = new Image();
+    img.src = currentFrame(i);
+    images.push(img);
+  }
+
+
+  gsap.to(frame, {
+    frame: frameCount-1,
+    snap: 'frame',
+    ease: "none",
+    scrollTrigger: {
+      scrub: true,
+      markers: true,
+      start: "0% start",
+      end: "50% center"
+      
+    },
+    onUpdate: render,
+  })
+
+
+
+  images[0].onload = render;
+
+  function render(){
+    context.canvas.width = images[0].width;
+    context.canvas.height = images[0].height;
+    context.clearRect(0,0, canvas.width, canvas.height);
+    context.drawImage(images[frame.frame], 0, 0);
+  }
