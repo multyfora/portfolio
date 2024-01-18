@@ -4,6 +4,7 @@ const typedTextSpan = document.querySelector(".typed-text");
 const cursorSpan = document.querySelector(".cursor");
 const canvas = document.querySelector("canvas");
 const loader = document.getElementById("preloader");
+const track = document.getElementById("image-track");
 
 function openTab(tabName){
 
@@ -123,10 +124,75 @@ setInterval(autoScroll, 2000);
     context.canvas.width = images[0].width;
     context.canvas.height = images[0].height;
     context.clearRect(0,0, canvas.width, canvas.height);
+    if (document.readyState === 'complete') {
     context.drawImage(images[frame.frame], 0, 0);
+    }
   }
 
+  // loader.style.display = 'none';
+  // this.document.body.style.overflowY = 'auto';
+  
   window.addEventListener("load", function(){
-    loader.style.display = 'none';
-    this.document.body.style.overflow = 'auto';
-  })
+      loader.style.display = 'none';
+      this.document.body.style.overflowY = 'auto';
+  });
+  let intervalID = setInterval(loadCheck, 1000);
+
+  function loadCheck() {
+    console.log("a");
+    if(loader.style.display != 'none'){
+    console.log("b");
+      if (document.readyState === 'complete') {
+        console.log("c");
+        loader.style.display = 'none';
+        this.document.body.style.overflowY = 'auto';
+      }
+    }
+}
+
+
+
+  // bottom gallery slider here
+
+
+  const handleOnDown = e => track.dataset.mouseDownAt = e.clientX;
+  
+  const handleOnUp = () => {
+    track.dataset.mouseDownAt = "0";  
+    track.dataset.prevPercentage = track.dataset.percentage;
+  }
+  
+  const handleOnMove = e => {
+    if(track.dataset.mouseDownAt === "0") return;
+    
+    const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
+          maxDelta = window.innerWidth;
+    
+    const percentage = (mouseDelta / maxDelta) * -100,
+          nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage,
+          nextPercentage = (Math.max(Math.min(nextPercentageUnconstrained, 0), -100));
+    
+    track.dataset.percentage = nextPercentage;
+    
+    track.animate({
+      transform: `translate(${nextPercentage*3.5}%, 0%)`
+    }, { duration: 1200, fill: "forwards" });
+    
+    for(const image of track.getElementsByClassName("image")) {
+      image.animate({
+        objectPosition: `${100 + nextPercentage}% center`
+      }, { duration: 1200, fill: "forwards" });
+    }
+  }
+  
+  window.onmousedown = e => handleOnDown(e);
+  
+  window.ontouchstart = e => handleOnDown(e.touches[0]);
+  
+  window.onmouseup = e => handleOnUp(e);
+  
+  window.ontouchend = e => handleOnUp(e.touches[0]);
+  
+  window.onmousemove = e => handleOnMove(e);
+  
+  window.ontouchmove = e => handleOnMove(e.touches[0]);
