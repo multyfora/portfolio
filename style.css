@@ -18,6 +18,7 @@ html{
     scroll-behavior: smooth;
 }
 body{
+    overflow: hidden;
     background-color: #080808;
     cursor: url('./images/cursor.svg'), auto;
     color: white;
@@ -32,6 +33,7 @@ body{
     background-position: center;
     background-attachment: fixed;
     z-index: 1;
+    contain: paint;
 }
 .canvas{
     position: absolute;
@@ -42,6 +44,16 @@ body{
     /* display: none; */
     z-index: 0;
     top: 0;
+    animation: parallax linear;
+    animation-timeline: scroll();
+
+    
+}
+
+@keyframes parallax {
+    to{
+        transform: translateY(1000px);
+    }
 }
 
 
@@ -326,12 +338,12 @@ nav ul li a:hover:after{
 
 .snaps-inline{
 
-    scroll-snap-type: inline mandatory;
+    /* scroll-snap-type: inline mandatory; */
     scroll-padding-inline: var(--_spacer, 1rem);
 }
 
 .snaps-inline > *{
-    scroll-snap-align: start;
+    /* scroll-snap-align: start; */
 }
 
 
@@ -365,4 +377,14 @@ nav ul li a:hover:after{
     to{scale: 1; opacity: 1;}
     
 }
+}
+
+#preloader{
+    background: #111 url(images/loader.gif) no-repeat center center;
+    /* background: #080808; */
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 1000000;
+
 }

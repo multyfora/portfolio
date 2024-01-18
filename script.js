@@ -3,6 +3,7 @@ const tabContents = document.getElementsByClassName("tab-contents");
 const typedTextSpan = document.querySelector(".typed-text");
 const cursorSpan = document.querySelector(".cursor");
 const canvas = document.querySelector("canvas");
+const loader = document.getElementById("preloader");
 
 function openTab(tabName){
 
@@ -57,6 +58,28 @@ document.addEventListener("DOMContentLoaded", function() { // On DOM Load initia
   if(textArray.length) setTimeout(type, newTextDelay + 250);
 });
 
+function autoScroll() {
+
+  function autoMini(desiredValue){
+    // Specify the container element by its ID
+    console.log("yeagh");
+    var container = document.getElementById('autoscroll');
+    console.log(!!container);
+    // Scroll the container horizontally by a fixed amount (adjust as needed)
+    container.scrollLeft += 1;
+    console.log(container.scrollLeft);
+    
+    if(container.scrollLeft>desiredValue){
+      console.log("naur");
+      clearInterval(interval);
+    }
+  }
+  // setInterval(autoMini(300), 1);
+
+}
+
+// Set an interval to call the autoScroll function every 2 seconds (2000 milliseconds)
+setInterval(autoScroll, 2000);
 
 
 // scrolll things ---------------------------------
@@ -85,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function() { // On DOM Load initia
     ease: "none",
     scrollTrigger: {
       scrub: true,
-      markers: true,
       start: "0% start",
       end: "50% center"
       
@@ -103,3 +125,8 @@ document.addEventListener("DOMContentLoaded", function() { // On DOM Load initia
     context.clearRect(0,0, canvas.width, canvas.height);
     context.drawImage(images[frame.frame], 0, 0);
   }
+
+  window.addEventListener("load", function(){
+    loader.style.display = 'none';
+    this.document.body.style.overflow = 'auto';
+  })
